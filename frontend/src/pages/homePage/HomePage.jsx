@@ -4,8 +4,9 @@ import "./HomePage.scss"
 
 const HomePage = () => {
     return (
-        <div className='layout'>
-            homePage
+        <div className='homePage'>
+            <div className='textContainer'>text</div>
+            <div className='imgContainer'>image</div>
         </div>
     )
 }

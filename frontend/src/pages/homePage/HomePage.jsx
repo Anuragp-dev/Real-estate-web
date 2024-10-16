@@ -18,8 +18,7 @@ const HomePage = () => {
                         Explore a wide range of properties tailored to your needs,
                         from cozy apartments to luxurious homes in your dream locations.
                         With our user-friendly platform, personalized service,
-                        and expert advice, you can navigate the real estate market with confidence.
-                        Start your journey to homeownership today!
+                        and expert advice,
                     </p>
                     <SearchBar />
                     <div className="box">

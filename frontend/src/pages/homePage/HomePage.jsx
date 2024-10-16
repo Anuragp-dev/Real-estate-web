@@ -17,22 +17,26 @@ const HomePage = () => {
                         we are here to guide you every step of the way.
                         Explore a wide range of properties tailored to your needs,
                         from cozy apartments to luxurious homes in your dream locations.
-                        
-                       
+
+
                     </p>
                     <SearchBar />
-                    <div className="box">
-                        <h1>16+</h1>
-                        <h2>Years of Experience</h2>
+                    <div className="boxes">
+                        <div className="box">
+                            <h1>16+</h1>
+                            <h2>Years of Experience</h2>
+                        </div>
+                        <div className="box">
+                            <h1>200+</h1>
+                            <h2>Award gained</h2>
+                        </div>
+                        <div className="box">
+                            <h1>1200+</h1>
+                            <h2>Property Ready</h2>
+                        </div>
+
                     </div>
-                    <div className="box">
-                        <h1>200+</h1>
-                        <h2>Award gained</h2>
-                    </div>
-                    <div className="box">
-                        <h1>1200+</h1>
-                        <h2>Property Ready</h2>
-                    </div>
+
                 </div>
             </div>
             <div className='imgContainer'>

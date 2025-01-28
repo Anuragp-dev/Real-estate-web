@@ -56,6 +56,48 @@
             width: max-content;
             background-color: rgba(254, 205, 81, 0.438);
         }
+
+        .bottom {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+
+            .features {
+                display: flex;
+                gap: 20px;
+                font-size: 14px;
+
+
+
+                .feature{
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    background-color: whitesmoke;
+                    padding: 5px;
+                    border-radius: 5px;
+                }
+            }
+
+            .icons{
+                display: flex;
+                gap: 20px;
+
+                .icon{
+                    border:1px solid #999;
+                    padding: 2px 5px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    &:hover{
+                        background-color:lightgrey;
+                    }
+                }
+            }
+        }
     }
 
 }

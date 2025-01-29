@@ -30,7 +30,7 @@ const Slider = ({ images }) => {
                 <img src={images[0]} alt="image" onClick={() => setImageIndex(0)} />
             </div>
             <div className="smallImage">
-                {images.slice(1).map((image, index) => (
+                {images?.slice(1)?.map((image, index) => (
                     <img src={image} alt="image" key={index} onClick={() => setImageIndex(index + 1)} />
                 ))}
             </div>

@@ -89,10 +89,11 @@ const Chat = () => {
                     </div>
                 </div>
                 <div className="bottom">
-                    <textarea name="" id=""></textarea>
+                    <textarea ></textarea>
                     <button>Send</button>
                 </div>
-            </div>)}
+            </div>
+            )}
         </div>
     )
 }

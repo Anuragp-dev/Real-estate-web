@@ -1,16 +1,29 @@
+@import "../../responsive.scss";
+
 .profilePage {
     display: flex;
     height: 100%;
 
+    @include md {
+        flex-direction: column;
+        overflow-y: scroll;
+    }
+
     .details {
         flex: 3;
         overflow-y: scroll;
+
+        @include md {
+            flex: none;
+            height: max-content;
+        }
 
         .wrapper {
             padding-right: 50px;
             display: flex;
             flex-direction: column;
             gap: 50px;
+            margin-bottom: 10px;
 
             .title {
                 display: flex;
@@ -57,7 +70,12 @@
         background-color: #fcf5f3;
         height: 100%;
 
-        .warrper {
+        @include md {
+            flex: none;
+            height: max-content;
+        }
+
+        .wrapper {
             padding: 0px 20px;
             height: 100%;
         }

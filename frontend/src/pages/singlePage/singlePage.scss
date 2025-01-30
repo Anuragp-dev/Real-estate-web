@@ -1,13 +1,27 @@
+@import "../../responsive.scss";
+
+
 .singlePage {
     display: flex;
     height: 100%;
     // overflow-y: scroll;
     // scrollbar-width: 1px;
 
+    @include md {
+        flex-direction: column;
+        overflow-y: scroll
+    }
+
     .details {
         flex: 3;
         height: 100%;
-        overflow-y: scroll;
+        // overflow-y: scroll;
+
+        @include md {
+            flex: none;
+            height: max-content;
+            margin-bottom: 50px;
+        }
 
         .wrapper {
             padding-right: 50px;
@@ -88,7 +102,13 @@
         flex: 2;
         background-color: #fcf5f3;
         height: 100%;
-        overflow-y: scroll;
+        // overflow-y: scroll;
+
+        @include md {
+            flex: none;
+            height: max-content;
+            margin-bottom: 50px;
+        }
 
         .wrapper {
             padding: 0px 20px;
@@ -150,6 +170,10 @@
             .sizes {
                 display: flex;
                 justify-content: space-between;
+
+                @include lg {
+                    font-size: 12px;
+                }
 
 
                 .size {

@@ -8,7 +8,7 @@ const List = () => {
         <div className='list'>
             {
                 listData.map((item) => (
-                    <Card item={item.id} key={item.id} />
+                    <Card item={item} key={item.id} />
                 ))
             }
         </div>

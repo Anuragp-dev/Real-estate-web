@@ -1,0 +1,44 @@
+.profilePage {
+    display: flex;
+    height: 100%;
+
+    .details {
+        flex: 3;
+
+        .wrapper {
+            padding-right: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+
+            .title{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .info{
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+
+                image{
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                };
+            }
+        }
+    }
+
+    .chatContainer {
+        flex: 2;
+        background-color: #fcf5f3;
+        height: 100%;
+
+        .warrper {
+            padding: 0px 20px;
+        }
+    }
+}

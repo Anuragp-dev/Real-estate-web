@@ -10,6 +10,8 @@ import ListPage from './pages/listPage/listPage';
 import Layout from './pages/layout/layout';
 import SinglePage from './pages/singlePage/singlePage';
 import ProfilePage from './pages/profilePage/profilePage';
+import Login from './pages/login/login';
+import Register from './pages/register/register';
 
 
 function App() {
@@ -36,6 +38,14 @@ function App() {
           path: "/profile",
           element: <ProfilePage />,
         },
+        {
+          path:"/login",
+          element:<Login/>
+        },
+        {
+          path:"/register",
+          element:<Register/>
+        }
       ]
     },
 

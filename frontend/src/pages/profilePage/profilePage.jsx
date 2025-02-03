@@ -33,9 +33,9 @@ const ProfilePage = () => {
                     <List />
                 </div>
             </div>
-            <div className="chatContainer">
+            <div className="chatContainer"> 
                 <div className="wrapper">
-                    <Chat/>
+                    <Chat />
                 </div>
             </div>
 

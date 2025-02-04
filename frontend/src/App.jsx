@@ -20,7 +20,7 @@ function App() {
     {
       path: "/",
       element: <Layout />,
-      children: [
+      children: [ 
         {
           path: "/",
           element: <HomePage />,

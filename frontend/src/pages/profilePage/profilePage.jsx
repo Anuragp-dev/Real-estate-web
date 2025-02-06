@@ -25,7 +25,7 @@ const ProfilePage = () => {
                         <h1>My List</h1>
                         <button>Create New List</button>
                     </div>
-                    <List />
+                    <List /> 
 
                     <div className="title">
                         <h1>Saved List </h1>

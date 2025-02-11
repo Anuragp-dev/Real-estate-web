@@ -71,6 +71,8 @@ export const login = async (req, res) => {
             expiresIn: age
         })
 
+        const 
+
         res
             .cookie("token", token, {
                 httpOnly: true,

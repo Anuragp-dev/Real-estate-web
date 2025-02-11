@@ -5,7 +5,12 @@ import jwt from "jsonwebtoken"
 export const register = async (req, res) => {
 
     try {
-        const { username, email, password, avatar } = req.body
+        const {
+            username,
+            email,
+            password,
+            avatar
+        } = req.body
 
         if (!username || !email || !password) {
             return res.status(400).json({ message: "All fields are required" })
@@ -36,7 +41,7 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
 
     const { email, password } = req.body
-    // console.log('email: ', email)
+    console.log('email: ', email)
 
 
     try {
@@ -71,7 +76,7 @@ export const login = async (req, res) => {
             expiresIn: age
         })
 
-        const {password:userPassword, ...userInfo} = user
+        const { password: userPassword, ...userInfo } = user
 
         res
             .cookie("token", token, {

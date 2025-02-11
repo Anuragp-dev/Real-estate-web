@@ -24,7 +24,6 @@ const login = () => {
       setLoading(false);
 
       localStorage.setItem("user", JSON.stringify(response.data));
-
       navigate("/")
 
 
@@ -42,7 +41,7 @@ const login = () => {
       <div className="formContainer">
         <form onSubmit={handleSubmit}>
           <h1>Welcome back</h1>
-          <input name="username" type="text" placeholder="Username" />
+          <input name="email" type="text" placeholder="Email" />
           <input name="password" type="password" placeholder="Password" />
           <button disabled={loading}>Login</button>
           {error && <p>{error}</p>}

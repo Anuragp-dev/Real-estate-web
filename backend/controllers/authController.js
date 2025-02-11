@@ -71,7 +71,7 @@ export const login = async (req, res) => {
             expiresIn: age
         })
 
-        const 
+        const {password:userPassword, ...userInfo} = user
 
         res
             .cookie("token", token, {

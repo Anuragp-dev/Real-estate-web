@@ -23,7 +23,9 @@ const login = () => {
       const response = await apiRequest.post("/auth/login", { email, password })
       setLoading(false);
 
-      navigate("/login")
+      localStorage.setItem("user", JSON.stringify(response.data));
+
+      navigate("/")
 
 
     } catch (error) {

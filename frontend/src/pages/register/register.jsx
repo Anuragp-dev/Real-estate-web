@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./register.scss";
 import { Link, useNavigate } from "react-router-dom";
 import apiRequest from '../../lib/apiRequest';
@@ -6,7 +6,7 @@ import apiRequest from '../../lib/apiRequest';
 const register = () => {
 
     const [error, setError] = useState(null);
-      const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {

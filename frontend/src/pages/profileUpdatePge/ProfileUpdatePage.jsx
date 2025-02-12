@@ -1,7 +1,10 @@
 import React from 'react'
 import "./profileUpdatePage.scss"
+import { AuthContext } from '../../context/AuthContext';
 
 const ProfileUpdatePage = () => {
+
+    const {updateUser, currentUser} = React.useContext(AuthContext); 
     return (
         <div className="profileUpdatePage">
             <div className="formContainer">
@@ -13,7 +16,7 @@ const ProfileUpdatePage = () => {
                             id="username"
                             name="username"
                             type="text"
-                            // defaultValue={currentUser.username}
+                            defaultValue={currentUser.username}
                         />
                     </div>
                     <div className="item">
@@ -22,7 +25,7 @@ const ProfileUpdatePage = () => {
                             id="email"
                             name="email"
                             type="email"
-                            // defaultValue={currentUser.email}
+                            defaultValue={currentUser.email}
                         />
                     </div>
                     <div className="item">
@@ -33,9 +36,9 @@ const ProfileUpdatePage = () => {
                     {/* {error && <span>error</span>} */}
                 </form>
             </div>
-            {/* <div className="sideContainer">
+            <div className="sideContainer">
                 <img src={avatar[0] || currentUser.avatar || "/noavatar.jpg"} alt="" className="avatar" />
-                <UploadWidget
+                {/* <UploadWidget
                     uwConfig={{
                         cloudName: "lamadev",
                         uploadPreset: "estate",
@@ -44,8 +47,8 @@ const ProfileUpdatePage = () => {
                         folder: "avatars",
                     }}
                     setState={setAvatar}
-                />
-            </div> */}
+                /> */}
+            </div>
         </div>
     );
 }

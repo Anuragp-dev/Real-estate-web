@@ -1,8 +1,10 @@
 import express from 'express'
 import cookieParser from 'cookie-parser'
-import authRoutes from "./routes/authRoutes.js"
-import cors from "cors"
 import dotenv from "dotenv"
+import cors from "cors"
+import authRoutes from "./routes/authRoutes.js"
+import testRoutes from "./routes/testRoutes.js"
+
 
 
 
@@ -24,6 +26,7 @@ app.use(cors({
 
 // routes
 app.use("/api/auth", authRoutes)
+app.use("/api/test", testRoutes)
 
 
 

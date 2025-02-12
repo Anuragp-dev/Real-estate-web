@@ -41,7 +41,7 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
 
     const { email, password } = req.body
-    console.log('email: ', email)
+    // console.log('email: ', email)
 
 
     try {
@@ -72,7 +72,12 @@ export const login = async (req, res) => {
 
         const age = 1000 * 60 * 60 * 24 * 7
 
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+        const token = jwt.sign(
+            {
+                id: user.id,
+                isAdmin:true
+            },
+            process.env.JWT_SECRET, {
             expiresIn: age
         })
 

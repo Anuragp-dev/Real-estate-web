@@ -8,6 +8,7 @@ const login = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const {updateUser} = React.useContext(AuthContext); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +24,8 @@ const login = () => {
       const response = await apiRequest.post("/auth/login", { email, password })
       setLoading(false);
 
-      localStorage.setItem("user", JSON.stringify(response.data));
+      updateUser(response.data);
+      // localStorage.setItem("user", JSON.stringify(response.data));
       navigate("/")
 
 

@@ -14,11 +14,12 @@ const ProfileUpdatePage = () => {
         const { username, email, password } = Object.fromEntries(formData);
 
         try {
-            const response = await apiRequest.put(`/users/${currentUser.id}`, {
+            const response = apiRequest.put(`/users/${currentUser.id}`, {
                 username,
                 email,
                 password
             })
+            updateUser(response.data);
         } catch (error) {
             console.log(error);
         }

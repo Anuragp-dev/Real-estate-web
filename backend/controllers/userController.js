@@ -1,4 +1,5 @@
-import prisma from "../lib/prisma"
+import bcrypt from "bcrypt"
+import prisma from "../lib/prisma.js"
 
 export const getUsers = async (req, res) => {
 
@@ -35,7 +36,7 @@ export const getUser = async (req, res) => {
         console.log(error)
         res.status(500).json({ message: "Something went wrong" })
     }
-}   
+}
 
 
 // update user info
@@ -43,29 +44,42 @@ export const getUser = async (req, res) => {
 export const updateUser = async (req, res) => {
 
     const id = req.params.id
+    const tokenUserId = req.userId
+    const {password, avatar, ...intputs} = req.body
 
-    const { 
-        username,
-        email,
-        password,
-        avatar
-    } = req.body
+
+    if (id !== tokenUserId) {
+        return res.status(403).json({ message: "You can only update your own account" })
+    }
+
+    let updatedPassword = null
+
+    // const {
+    //     username,
+    //     email,
+    //     password,
+    //     avatar
+    // } = req.body
 
     try {
 
-        const user = await prisma.user.update({
+        if (password) {
+            updatedPassword = await bcrypt.hash(password, 10)
+        }
+
+        const UpdateUser = await prisma.user.update({
             where: {
                 id: id
             },
             data: {
-                username,
-                email,
-                password,
-                avatar
+                ...intputs,
+                ...(updatedPassword && {password: updatedPassword}),
+                ...(avatar && {avatar})
             }
+           
         })
 
-        res.status(200).json(user)
+        res.status(200).json(UpdateUser)
 
     } catch (error) {
 
@@ -79,6 +93,12 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
 
     const id = req.params.id
+    const tokenUserId = req.userId
+
+
+    if (id !== tokenUserId) {
+        return res.status(403).json({ message: "You can only delete your own account" })
+    }
 
     try {
 

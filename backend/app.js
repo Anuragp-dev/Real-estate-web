@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 import cors from "cors"
 import authRoutes from "./routes/authRoutes.js"
 import testRoutes from "./routes/testRoutes.js"
+import  userRoutes from "./routes/userRoutes.js"
 
 
 
@@ -27,6 +28,8 @@ app.use(cors({
 // routes
 app.use("/api/auth", authRoutes)
 app.use("/api/test", testRoutes)
+app.use("/api/users", userRoutes)
+
 
 
 

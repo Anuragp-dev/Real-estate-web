@@ -3,13 +3,13 @@ import "./profileUpdatePage.scss"
 import { AuthContext } from '../../context/AuthContext';
 import apiRequest from '../../lib/apiRequest';
 import { useNavigate } from 'react-router-dom';
+import UploadWidget from '../../components/uploadWidget/uploadWidget';
 
 const ProfileUpdatePage = () => {
-    const [error, setError] = useState("");
-    const [avatar, setAvatar] = useState([]);
-    const Navigate = useNavigate();
-
     const { updateUser, currentUser } = React.useContext(AuthContext);
+    const [error, setError] = useState("");
+    const Navigate = useNavigate();
+    const [avatar, setAvatar] = useState(currentUser.avatar);
 
 
     const handleSubmit = async (e) => {
@@ -21,7 +21,8 @@ const ProfileUpdatePage = () => {
             const response = await apiRequest.put(`/users/update_user/${currentUser.id}`, {
                 username,
                 email,
-                password
+                password,
+                avatar
             })
             updateUser(response.data);
             Navigate("/profile")
@@ -61,18 +62,18 @@ const ProfileUpdatePage = () => {
                 </form>
             </div>
             <div className="sideContainer">
-                <img src="/noavatar.png" alt="" className="avatar" />
-                {/* avatar[0] || currentUser?.avatar || */}
-                {/* <UploadWidget
+                <img src={avatar || "/noavatar.png"} alt="" className="avatar" />
+
+                <UploadWidget
                     uwConfig={{
-                        cloudName: "lamadev",
-                        uploadPreset: "estate",
+                        cloudName: "anurag212",
+                        uploadPreset: "easyestate",
                         multiple: false,
                         maxImageFileSize: 2000000,
                         folder: "avatars",
                     }}
-                    setState={setAvatar}
-                /> */}
+                    setAvatar={setAvatar}
+                />
             </div>
         </div>
     );

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./profileUpdatePage.scss"
 import { AuthContext } from '../../context/AuthContext';
 import apiRequest from '../../lib/apiRequest';
 
 const ProfileUpdatePage = () => {
+    const [error, setError] = useState("");
 
     const { updateUser, currentUser } = React.useContext(AuthContext);
 
@@ -14,7 +15,7 @@ const ProfileUpdatePage = () => {
         const { username, email, password } = Object.fromEntries(formData);
 
         try {
-            const response = apiRequest.put(`/users/${currentUser.id}`, {
+            const response = await apiRequest.put(`/users/${currentUser.id}`, {
                 username,
                 email,
                 password
@@ -52,7 +53,7 @@ const ProfileUpdatePage = () => {
                         <input id="password" name="password" type="password" />
                     </div>
                     <button>Update</button>
-                    {/* {error && <span>error</span>} */}
+                    {error && <span>error</span>}
                 </form>
             </div>
             <div className="sideContainer">

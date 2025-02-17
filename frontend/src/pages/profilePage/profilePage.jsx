@@ -1,21 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import List from '../../components/list/list'
 import './profilePage.scss'
 import Chat from '../../components/chat/chat'
 import apiRequest from '../../lib/apiRequest';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from "../../context/AuthContext";
 
 const ProfilePage = () => {
-
     const Navigate = useNavigate()
+    const { updateUser, currentUser } = useContext(AuthContext);
 
-
-    const handleLogout = () => {
+    const handleLogout = async () => {
 
         try {
 
-            const response = apiRequest.post("/auth/logout")
+            const response = await apiRequest.post("/auth/logout")
             localStorage.removeItem("user")
+            updateUser(null);
             Navigate("/")
         } catch (error) {
             console.log(error)

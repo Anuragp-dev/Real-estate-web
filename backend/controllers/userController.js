@@ -45,7 +45,7 @@ export const updateUser = async (req, res) => {
 
     const id = req.params.id
     const tokenUserId = req.userId
-    const {password, avatar, ...intputs} = req.body
+    const { password, avatar, ...intputs } = req.body
 
 
     if (id !== tokenUserId) {
@@ -73,13 +73,15 @@ export const updateUser = async (req, res) => {
             },
             data: {
                 ...intputs,
-                ...(updatedPassword && {password: updatedPassword}),
-                ...(avatar && {avatar})
+                ...(updatedPassword && { password: updatedPassword }),
+                ...(avatar && { avatar })
             }
-           
+
         })
 
-        res.status(200).json(UpdateUser)
+        const { password: userPassword, ...rest } = UpdateUser
+
+        res.status(200).json(rest)
 
     } catch (error) {
 

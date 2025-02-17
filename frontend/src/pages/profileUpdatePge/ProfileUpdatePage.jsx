@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import "./profileUpdatePage.scss"
 import { AuthContext } from '../../context/AuthContext';
 import apiRequest from '../../lib/apiRequest';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileUpdatePage = () => {
     const [error, setError] = useState("");
+    const [avatar, setAvatar] = useState([]);
+    const Navigate = useNavigate();
 
     const { updateUser, currentUser } = React.useContext(AuthContext);
 
@@ -15,12 +18,13 @@ const ProfileUpdatePage = () => {
         const { username, email, password } = Object.fromEntries(formData);
 
         try {
-            const response = await apiRequest.put(`/users/${currentUser.id}`, {
+            const response = await apiRequest.put(`/users/update_user/${currentUser.id}`, {
                 username,
                 email,
                 password
             })
             updateUser(response.data);
+            Navigate("/profile")
         } catch (error) {
             console.log(error);
         }
@@ -57,7 +61,8 @@ const ProfileUpdatePage = () => {
                 </form>
             </div>
             <div className="sideContainer">
-                <img src={avatar[0] || currentUser.avatar || "/noavatar.jpg"} alt="" className="avatar" />
+                <img src="/noavatar.png" alt="" className="avatar" />
+                {/* avatar[0] || currentUser?.avatar || */}
                 {/* <UploadWidget
                     uwConfig={{
                         cloudName: "lamadev",

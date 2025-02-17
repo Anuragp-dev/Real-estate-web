@@ -5,6 +5,7 @@ import cors from "cors"
 import authRoutes from "./routes/authRoutes.js"
 import testRoutes from "./routes/testRoutes.js"
 import  userRoutes from "./routes/userRoutes.js"
+import  PostRoutes from "./routes/postRoutes.js"
 
 
 
@@ -29,6 +30,7 @@ app.use(cors({
 app.use("/api/auth", authRoutes)
 app.use("/api/test", testRoutes)
 app.use("/api/users", userRoutes)
+app.use("/api/posts", PostRoutes)
 
 
 

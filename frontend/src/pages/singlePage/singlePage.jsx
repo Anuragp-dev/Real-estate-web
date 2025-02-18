@@ -4,6 +4,7 @@ import Slider from '../../components/slider/slider'
 import { singlePostData, userData } from '../../lib/dummydata'
 import Map from '../../components/map/map'
 import { useLoaderData } from 'react-router-dom'
+import DOMpurify from 'dompurify'
 
 const SinglePage = () => {
   const post = useLoaderData();
@@ -25,12 +26,14 @@ const SinglePage = () => {
                 </div>
               </div>
               <div className="user">
-                <img src={post.user.img} alt="" />
-                <span>{post.user.name}</span>
+                <img src={post.user.avatar} alt="" />
+                <span>{post.user.username}</span>
               </div>
             </div>
-            <div className="bottom">
-              {post.description}
+            <div className="bottom"
+              dangerouslySetInnerHTML={{ __html: DOMpurify.sanitize(post.PostDetail.desc) }}
+            >
+              {/* {post.desc} */}
             </div>
           </div>
         </div>
@@ -56,34 +59,42 @@ const SinglePage = () => {
               <img src="/pet.png" alt="" />
               <div className="featureText">
                 <span>Pet Policy</span>
-                <p>Pets Allowed</p>
+                {post.PostDetail.pets === "allowed" ? (
+                  <p>Pets Allowed</p>
+                ) : (
+                  <p>Pets Not Allowed</p>
+                )}
               </div>
             </div>
 
             <div className="feature">
               <img src="/fee.png" alt="" />
               <div className="featureText">
-                <span>Property Fees</span>
-                <p>Must have 3x the rent in total household income</p>
+                <span>Income Policy</span>
+                <p>{post.PostDetail.income}</p>
               </div>
             </div>
           </div>
           <p className='title'>Sizes </p>
           <div className="sizes">
             <div className="size">
+              <img src="/size.png" alt="" />
+              <span>{post.PostDetail.size} sqft</span>
+            </div>
+            <div className="size">
               <img src="/bed.png" alt="" />
-              <span>2 Beds</span>
+              <span>{post.bedroom}beds</span>
             </div>
 
             <div className="size">
               <img src="/bath.png" alt="" />
-              <span>2 bathroom</span>
+              <span>{post.bathroom} bathroom</span>
             </div>
 
-            <div className="size">
+            {/* <div className="size">
               <img src="/bath.png" alt="" />
               <span>90 sqft</span>
-            </div>
+            </div> */}
           </div>
 
           <p className='title'>Nearby Places</p>
@@ -91,8 +102,8 @@ const SinglePage = () => {
             <div className="feature">
               <img src="/school.png" alt="" />
               <div className="featureText">
-                <span>Shop</span>
-                <p>250m away</p>
+                <span>School</span>
+                <p>{post.PostDetail.school > 999 ? post.PostDetail.school / 1000 + "km" : post.PostDetail.school + "m"} away</p>
 
               </div>
             </div>
@@ -100,21 +111,21 @@ const SinglePage = () => {
               <img src="/restaurant.png" alt="" />
               <div className="featureText">
                 <span>Restaurant</span>
-                <p>100m away</p>
+                <p>{post.PostDetail.restaurant}m away</p>
               </div>
             </div>
             <div className="feature">
               <img src="/bus.png" alt="" />
               <div className="featureText">
                 <span>Bus stop</span>
-                <p>100m away</p>
+                <p>{post.PostDetail.bus}m away</p>
               </div>
 
             </div>
           </div>
           <p className='title'>Location</p>
           <div className='mapContainer'>
-            <Map items={[singlePostData]} />
+            <Map items={[post]} />
           </div>
           <div className="buttons">
             <button>

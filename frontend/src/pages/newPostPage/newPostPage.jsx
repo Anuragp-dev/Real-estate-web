@@ -25,7 +25,7 @@ const NewPostPage = () => {
         const inputs = Object.fromEntries(formData);
 
         try {
-            const response = await apiRequest.post("/posts", {
+            const response = await apiRequest.post("/posts/addPost", {
 
                 postData: {
                     title: inputs.title,
@@ -40,7 +40,7 @@ const NewPostPage = () => {
                     longitude: inputs.longitude,
                     images: images,
                 },
-                postDetail: {
+                PostDetail: {
                     desc: value,
                     utilities: inputs.utilities,
                     pet: inputs.pet,
@@ -52,7 +52,8 @@ const NewPostPage = () => {
                 },
             });
 
-            navigate(`/getPost/${response.data._id}`)
+            navigate(`/${response.data.id}`)
+            console.log('navigate: ', navigate);
 
         } catch (error) {
             console.log(error);
@@ -68,7 +69,7 @@ const NewPostPage = () => {
                 <h1>Add New Post</h1>
                 <div className="wrapper">
                     <form
-                    // onSubmit={handleSubmit}
+                    onSubmit={handleSubmit}
                     >
                         <div className="item">
                             <label htmlFor="title">Title</label>

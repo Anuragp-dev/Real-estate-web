@@ -3,23 +3,25 @@ import './singlePage.scss'
 import Slider from '../../components/slider/slider'
 import { singlePostData, userData } from '../../lib/dummydata'
 import Map from '../../components/map/map'
+import { useLoaderData } from 'react-router-dom'
 
 const SinglePage = () => {
+  const post = useLoaderData();
   return (
     <div className='singlePage'>
       <div className="details">
         <div className="wrapper">
-          <Slider images={singlePostData.images} />
+          <Slider images={post.images} />
           <div className="info">
             <div className="top">
               <div className="post">
-                <h1>{singlePostData.title}</h1>
+                <h1>{post.title}</h1>
                 <div className="address">
                   <img src="/pin.png" alt="" />
-                  <span>{singlePostData.address}</span>
+                  <span>{post.address}</span>
                 </div>
                 <div className="price">
-                  ${singlePostData.price}
+                  ${post.price}
                 </div>
               </div>
               <div className="user">
@@ -28,7 +30,7 @@ const SinglePage = () => {
               </div>
             </div>
             <div className="bottom">
-              {singlePostData.description}
+              {post.description}
             </div>
           </div>
         </div>

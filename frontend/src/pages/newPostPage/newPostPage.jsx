@@ -1,7 +1,7 @@
 import React from 'react'
 import "./newPostPage.scss"
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 // import UploadWidget from '../../components/uploadWidget/uploadWidget'
 // import { useEffect } from 'react'
 import ReactQuill from "react-quill";
@@ -15,6 +15,8 @@ const NewPostPage = () => {
     const [value, setValue] = useState("");
     const [error, setError] = useState("");
     const [images, setImages] = useState([]);
+
+    const navigate = useNavigate();
 
 
     const handleSubmit = async (e) => {
@@ -49,6 +51,8 @@ const NewPostPage = () => {
                     restaurant: parseInt(inputs.restaurant),
                 },
             });
+
+            navigate(`/getPost/${response.data._id}`)
 
         } catch (error) {
             console.log(error);
@@ -169,7 +173,7 @@ const NewPostPage = () => {
             </div>
             <div className="sideContainer">
                 {images.map((image, index) => (
-                    <img src={image} key={index} alt="" />
+                    <img src={image} key={index} alt="image" />
                 ))}
                 <UploadWidget
                     uwConfig={{

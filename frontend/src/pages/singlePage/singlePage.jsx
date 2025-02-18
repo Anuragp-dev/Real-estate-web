@@ -25,8 +25,8 @@ const SinglePage = () => {
                 </div>
               </div>
               <div className="user">
-                <img src={userData.img} alt="" />
-                <span>{userData.name}</span>
+                <img src={post.user.img} alt="" />
+                <span>{post.user.name}</span>
               </div>
             </div>
             <div className="bottom">
@@ -43,7 +43,12 @@ const SinglePage = () => {
               <img src="/utility.png" alt="" />
               <div className="featureText">
                 <span>Utilities</span>
-                <p>renter is responsible</p>
+
+                {post.PostDetail.utilities === "owner" ? (
+                  <p>owner is responsible</p>
+                ) : (
+                  <p>Tenant is responsible</p>
+                )}
               </div>
             </div>
 

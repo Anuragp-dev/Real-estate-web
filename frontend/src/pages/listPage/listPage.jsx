@@ -4,22 +4,24 @@ import { listData } from '../../lib/dummydata'
 import Filter from '../../components/filter/filter'
 import Card from '../../components/card/card'
 import Map from '../../components/map/map'
+import { useLoaderData } from 'react-router-dom'
 
 const ListPage = () => {
 
-    const data = listData
+    // const data = listData
+    const post = useLoaderData();
     return (
         <div className='listPage'>
             <div className="listContainer">
                 <div className="wrapper">
-                    <Filter/>
-                    {data.map((item) => (
-                        <Card item={item} key={item.id}/>
+                    <Filter />
+                    {post.map((item) => (
+                        <Card item={item} key={item.id} />
                     ))}
-                    </div>
+                </div>
             </div>
             <div className="mapContainer">
-                <Map items={data}/>
+                <Map items={post} />
             </div>
         </div>
     )

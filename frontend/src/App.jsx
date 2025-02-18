@@ -13,6 +13,7 @@ import ProfilePage from './pages/profilePage/profilePage';
 import Login from './pages/login/login';
 import Register from './pages/register/register';
 import ProfileUpdatePage from './pages/profileUpdatePge/ProfileUpdatePage';
+import NewPostPage from './pages/newPostPage/newPostPage';
 
 
 function App() {
@@ -58,6 +59,10 @@ function App() {
         {
           path: "/profile/update",
           element: <ProfileUpdatePage />,
+        },
+        {
+          path: "/new-post",
+          element: <NewPostPage />,
         },
 
       ]

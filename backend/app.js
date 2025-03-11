@@ -4,8 +4,9 @@ import dotenv from "dotenv"
 import cors from "cors"
 import authRoutes from "./routes/authRoutes.js"
 import testRoutes from "./routes/testRoutes.js"
-import  userRoutes from "./routes/userRoutes.js"
-import  PostRoutes from "./routes/postRoutes.js"
+import userRoutes from "./routes/userRoutes.js"
+import PostRoutes from "./routes/postRoutes.js"
+import chatRoutes from "./routes/chatRoutes.js"
 
 
 
@@ -31,6 +32,7 @@ app.use("/api/auth", authRoutes)
 app.use("/api/test", testRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/posts", PostRoutes)
+app.use("/api/chats", chatRoutes)
 
 
 

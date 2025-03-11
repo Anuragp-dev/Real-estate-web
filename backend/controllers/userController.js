@@ -134,7 +134,7 @@ export const savePost = async (req, res) => {
                 userId_postId: {
                     userId: userId,
                     postId
-                }  
+                }
             }
         })
 
@@ -163,3 +163,37 @@ export const savePost = async (req, res) => {
 
 
 }
+
+
+export const ProfilePosts = async (req, res) => {
+
+    const tokenUserId = req.params.userId
+
+    try {
+
+        const userPosts = await prisma.post.findUnique({
+            where: {
+                userId: tokenUserId
+            }
+        })
+
+        const saved = await prisma.savedPost.findMany({
+            where: {
+                userId: tokenUserId
+            },
+            include: {
+                post: true
+            }
+        })
+
+        const savedPosts = saved.map((item) => item.post)
+
+        res.status(200).json(user)
+
+    } catch (error) {
+
+        console.log(error)
+        res.status(500).json({ message: "Something went wrong" })
+    }
+}
+

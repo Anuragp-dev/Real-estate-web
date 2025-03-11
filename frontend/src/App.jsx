@@ -14,7 +14,7 @@ import Login from './pages/login/login';
 import Register from './pages/register/register';
 import ProfileUpdatePage from './pages/profileUpdatePge/ProfileUpdatePage';
 import NewPostPage from './pages/newPostPage/newPostPage';
-import { listPageLoader, singlePageLoader } from './lib/loaders';
+import { listPageLoader, ProfilePageLoader, singlePageLoader } from './lib/loaders';
 
 
 function App() {
@@ -58,6 +58,7 @@ function App() {
         {
           path: "/profile",
           element: <ProfilePage />,
+          loader: ProfilePageLoader
         },
         {
           path: "/profile/update",

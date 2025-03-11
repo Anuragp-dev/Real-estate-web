@@ -10,3 +10,8 @@ export const listPageLoader = async ({ request, params }) => {
     const response = await apiRequest("/posts/getPosts?" + query);
     return response.data
 }
+
+export const ProfilePageLoader = async () => {
+    const response = await apiRequest("/users/profilePosts" );
+    return response.data
+}

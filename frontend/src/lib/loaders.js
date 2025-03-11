@@ -1,4 +1,5 @@
 import apiRequest from "./apiRequest"
+import { defer } from "react-router-dom";
 
 export const singlePageLoader = async ({ request, params }) => {
     const response = await apiRequest("/posts/getPost/" + params.id);
@@ -12,7 +13,10 @@ export const listPageLoader = async ({ request, params }) => {
 }
 
 export const ProfilePageLoader = async () => {
-    const response = await apiRequest("/users/profilePosts" );
-    console.log("ProfilePageLoader Response:", response); // Log full response
-    return response.data
-}
+    const postPromise = apiRequest("/users/profilePosts");
+    const chatPromise = apiRequest("/chats");
+    return defer({
+      postResponse: postPromise,
+      chatResponse: chatPromise,
+    });
+  };

@@ -56,33 +56,38 @@ const ProfilePage = () => {
                         </Link>
                     </div>
 
-                    <Suspense fallback={<div>Loading...</div>}>
-                        <Await resolve={data}
-
-                            errorElement={<div>Error</div>}
+                    <Suspense fallback={<p>Loading...</p>}>
+                        <Await
+                            resolve={data.postResponse}
+                            errorElement={<p>Error loading posts!</p>}
                         >
-                            {(postResponse) => {
-                                console.log("Resolved Data:", postResponse); // Log resolved data
-                                return <List posts={postResponse?.userPosts} />;
-                            }}
+                            {(postResponse) => <List posts={postResponse.data.userPosts} />}
                         </Await>
                     </Suspense>
 
                     <div className="title">
                         <h1>Saved List </h1>
                     </div>
-                    <Suspense fallback={<div>Loading...</div>}>
-                        <Await resolve={data}
-                            errorElement={<div>Error</div>}
+                    <Suspense fallback={<p>Loading...</p>}>
+                        <Await
+                            resolve={data.postResponse}
+                            errorElement={<p>Error loading posts!</p>}
                         >
-                            {(postResponse) => <List posts={postResponse?.savedPosts} />}
+                            {(postResponse) => <List posts={postResponse.data.savedPosts} />}
                         </Await>
                     </Suspense>
                 </div>
             </div>
             <div className="chatContainer">
                 <div className="wrapper">
-                    <Chat />
+                    <Suspense fallback={<p>Loading...</p>}>
+                        <Await
+                            resolve={data.chatResponse}
+                            errorElement={<p>Error loading chats!</p>}
+                        >
+                            {(chatResponse) => <Chat chats={chatResponse.data} />}
+                        </Await>
+                    </Suspense>
                 </div>
             </div>
 

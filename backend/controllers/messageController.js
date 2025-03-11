@@ -35,7 +35,8 @@ export const addMessage = async (req, res) => {
                 id: chatId
             },
             data: {
-                seenBy:[tokenUserId]
+                seenBy: [tokenUserId],
+                lastMessage: text
             }
         })
         res.status(200).json(message)

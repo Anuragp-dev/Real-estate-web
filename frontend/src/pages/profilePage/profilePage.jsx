@@ -9,6 +9,7 @@ import Card from '../../components/card/card';
 
 const ProfilePage = () => {
     const data = useLoaderData();
+    console.log('data: ', data);
     const Navigate = useNavigate()
     const { updateUser, currentUser } = useContext(AuthContext);
 
@@ -56,22 +57,26 @@ const ProfilePage = () => {
                     </div>
 
                     <Suspense fallback={<div>Loading...</div>}>
-                    <Await resolve={data.postResponse}
-                        errorElement={<div>Error</div>}
-                    >
-                        {(postResponse) =>   <List post={postResponse.data.userPosts} /> }
-                    </Await>
+                        <Await resolve={data}
+
+                            errorElement={<div>Error</div>}
+                        >
+                            {(postResponse) => {
+                                console.log("Resolved Data:", postResponse); // Log resolved data
+                                return <List posts={postResponse?.userPosts} />;
+                            }}
+                        </Await>
                     </Suspense>
 
                     <div className="title">
                         <h1>Saved List </h1>
                     </div>
                     <Suspense fallback={<div>Loading...</div>}>
-                    <Await resolve={data.postResponse}
-                        errorElement={<div>Error</div>}
-                    >
-                        {(postResponse) =>   <List post={postResponse.data.savedPosts} /> }
-                    </Await>
+                        <Await resolve={data}
+                            errorElement={<div>Error</div>}
+                        >
+                            {(postResponse) => <List posts={postResponse?.savedPosts} />}
+                        </Await>
                     </Suspense>
                 </div>
             </div>

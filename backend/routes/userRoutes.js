@@ -12,4 +12,7 @@ router.put("/update_user/:id", verifyToken, updateUser);
 router.delete("/delete_user/:id", verifyToken, deleteUser);
 router.post("/save-post", verifyToken, savePost);
 router.get("/profilePosts", verifyToken, ProfilePosts);
+
+
+
 export default router;

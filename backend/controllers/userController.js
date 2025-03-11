@@ -125,14 +125,14 @@ export const deleteUser = async (req, res) => {
 export const savePost = async (req, res) => {
 
     const postId = req.body.postId
-    const userId = req.userId
+    const tokenUserId = req.userId
 
     try {
 
-        const savedPost = await prisma.savedPost.create({
+        const savedPost = await prisma.savedPost.findUnique({
             where: {
                 userId_postId: {
-                    userId: userId,
+                    userId: tokenUserId,
                     postId
                 }
             }
@@ -148,8 +148,8 @@ export const savePost = async (req, res) => {
         } else {
             await prisma.savedPost.create({
                 data: {
-                    userId: tokenUserId,
-                    postId
+                    userId:tokenUserId,
+                    postId,
                 }
             })
         }
@@ -171,7 +171,7 @@ export const ProfilePosts = async (req, res) => {
 
     try {
 
-        const userPosts = await prisma.post.findUnique({
+        const userPosts = await prisma.post.findMany({
             where: {
                 userId: tokenUserId
             }
@@ -188,7 +188,10 @@ export const ProfilePosts = async (req, res) => {
 
         const savedPosts = saved.map((item) => item.post)
 
-        res.status(200).json(user)
+         res.status(200).json({ userPosts, savedPosts });
+
+         console.log(savedPosts)
+         console.log(userPosts)
 
     } catch (error) {
 

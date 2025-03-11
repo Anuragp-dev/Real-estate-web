@@ -1,13 +1,13 @@
 import React from 'react'
 import Card from '../card/card'
 import './list.scss'
-import { listData } from '../../lib/dummydata'
 
-const List = () => {
+const List = ({posts}) => {
+console.log('posts: ', posts)
     return (
         <div className='list'>
             {
-                listData.map((item) => (
+                posts?.map((item) => (
                     <Card item={item} key={item.id} />
                 ))
             }

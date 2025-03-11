@@ -4,10 +4,14 @@ import './card.scss'
 
 
 const Card = ({ item }) => {
+
+  if (!item || !item.images || item.images.length === 0) {
+    return <div className="card">No data available</div>;
+  }
   return (
     <div className='card'>
       <Link to={`/${item.id}`} className='imageContainer'>
-        <img src={item?.images[0]} alt='image' />
+        <img src={item?.images[0] || ""} alt='image' />
       </Link>
       <div className='textContainer'>
         <h2 className='title'>

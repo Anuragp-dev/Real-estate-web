@@ -47,11 +47,16 @@ const Chat = ({ chats }) => {
                     <span className='close' onClick={() => setChat(null)}>x</span>
                 </div>
                 <div className="center">
-
-                    <div className="chatMessage own">
-                        <p>leojfjfd.kfjdskfjjdsfkdsjfkdjk</p>
+                { Chat.messages.map((message) => (
+                    
+                    <div className="chatMessage own" key={message.id}>
+                        <p>{message.text}</p>
                         <span>1 hour ago</span>
                     </div>
+                ))
+
+                }
+                    
                     <div className="chatMessage">
                         <p>leojfjfd.kfjdskfjjdsfkdsjfkdjk</p>
                         <span>1 hour ago</span>

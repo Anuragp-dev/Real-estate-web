@@ -5,28 +5,29 @@ import apiRequest from '../../lib/apiRequest';
 import { format } from "timeago.js"
 
 const Chat = ({ chats }) => {
-    const [Chat, setChat] = React.useState(null)
+    const [chat, setChat] = React.useState(null)
+    console.log('Chat: ', chat);
     const { currentUser } = useContext(AuthContext);
 
     const handleOpenChat = async (id, receiver) => {
         try {
-            const res = await apiRequest("/chat/" + id)
-            setChat(...res.data, receiver)
+            const res = await apiRequest.get("/chats/" + id)
+            console.log('res: ', res);
+            setChat({ ...res?.data, receiver })
         } catch (error) {
-            console.log(error)
         }
     }
 
     const handleSubmit = async (e) => {
-
+        e.preventDefault();
         const formData = new FormData(e.target);
         const text = formData.get("text");
         try {
-            const res = await apiRequest.post("/messages/" + Chat.id, { text })
+            const res = await apiRequest.post("/messages/add-message/" + chat.id, { text })
             setChat((prev) => ({ ...prev, messages: [...prev.messages, res.data] }))
             e.target.reset()
         } catch (error) {
-            console.log(error)
+        console.log('error: ', error);
         }
 
     }
@@ -37,7 +38,7 @@ const Chat = ({ chats }) => {
             <div className="messages">
                 <h1>Message</h1>
 
-                {chats.map((item) => (
+                {chats?.map((item) => (
 
                     <div className="message" key={item.id}
                         style={{
@@ -45,25 +46,25 @@ const Chat = ({ chats }) => {
                         }}
                         onClick={() => handleOpenChat(item.id, item.receiver)}
                     >
-                        <img src={item.receiver.avatar || "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"} alt="" />
-                        <span>{item.receiver.username}</span>
+                        <img src={item?.receiver?.avatar || "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"} alt="" />
+                        <span>{item?.receiver?.username}</span>
                         <p>
-                            {item.message}
+                            {item.lastMessage}
                         </p>
                     </div>
 
                 ))}
             </div>
-            {Chat && (<div className='chatBox'>
+            {chat && (<div className='chatBox'>
                 <div className="top">
                     <div className="user">
-                        <img src={Chat.receiver.avatar || "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"} alt="" />
-                        <span>{Chat.receiver.username}</span>
+                        <img src={chat?.receiver?.avatar || "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"} alt="" />
+                        <span>{chat?.receiver?.username}</span>
                     </div>
                     <span className='close' onClick={() => setChat(null)}>x</span>
                 </div>
                 <div className="center">
-                    {Chat.messages.map((message) => (
+                    {chat.messages.map((message) => (
 
                         <div className="chatMessage"
 
@@ -75,18 +76,12 @@ const Chat = ({ chats }) => {
                             key={message.id}
                         >
                             <p>{message.text}</p>
-                            <span>1 hour ago</span>
+                            <span>{format(message.createdAt)}</span>
                         </div>
                     ))
 
                     }
 
-                    <div className="chatMessage"
-
-                    >
-                        <p>leojfjfd.kfjdskfjjdsfkdsjfkdjk</p>
-                        <span>{format(message.createdAt)}</span>
-                    </div>
                 </div>
                 <form onSubmit={handleSubmit} className="bottom">
                     <textarea name='text' ></textarea>

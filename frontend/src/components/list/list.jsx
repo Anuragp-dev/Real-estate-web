@@ -3,7 +3,7 @@ import Card from '../card/card'
 import './list.scss'
 
 const List = ({posts}) => {
-console.log('posts: ', posts)
+// console.log('posts: ', posts)
     return (
         <div className='list'>
             {

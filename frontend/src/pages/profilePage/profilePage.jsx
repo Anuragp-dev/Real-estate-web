@@ -5,11 +5,11 @@ import Chat from '../../components/chat/chat'
 import apiRequest from '../../lib/apiRequest';
 import { Await, Link, useLoaderData, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../../context/AuthContext";
-import Card from '../../components/card/card';
+// import Card from '../../components/card/card';
 
 const ProfilePage = () => {
     const data = useLoaderData();
-    console.log('data: ', data);
+    // console.log('data: ', data);
     const Navigate = useNavigate()
     const { updateUser, currentUser } = useContext(AuthContext);
 
@@ -84,7 +84,7 @@ const ProfilePage = () => {
                         <Await
                             resolve={data.chatResponse}
                             errorElement={<p>Error loading chats!</p>}
-                        >
+                            >
                             {(chatResponse) => <Chat chats={chatResponse.data} />}
                         </Await>
                     </Suspense>

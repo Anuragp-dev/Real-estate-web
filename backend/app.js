@@ -7,6 +7,7 @@ import testRoutes from "./routes/testRoutes.js"
 import userRoutes from "./routes/userRoutes.js"
 import PostRoutes from "./routes/postRoutes.js"
 import chatRoutes from "./routes/chatRoutes.js"
+import messageRoutes from "./routes/messageRoutes.js"
 
 
 
@@ -33,6 +34,7 @@ app.use("/api/test", testRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/posts", PostRoutes)
 app.use("/api/chats", chatRoutes)
+app.use("/api/messages", messageRoutes)
 
 
 

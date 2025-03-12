@@ -91,7 +91,7 @@ model Chat {
   seenBy  String[] @db.ObjectId
 
   createdAt   DateTime  @default(now())
-  Message     Message[]
+  messages     Message[]
   lastMessage String?
 }
 

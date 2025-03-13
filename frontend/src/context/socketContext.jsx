@@ -1,25 +1,26 @@
-import { createContext, useEffect, useState } from "react";
-import {io} from "socket.io-client"
+import { createContext, useContext, useEffect, useState } from "react";
+import { io } from "socket.io-client"
+import { AuthContext } from "./AuthContext";
 
 export const SocketContext = createContext();
 
 export const SocketContextProvider = ({ children }) => {
 
-    const [currentUser, setCurrentUser] = useState(
-        JSON.parse(localStorage.getItem("user")) || null
-    );
+    const [socket, setSocket] = useState(null);
+    const { currentUser } = useContext(AuthContext)
 
-    const updateUser = (data) => {
-        setCurrentUser(data);
-    };
 
     useEffect(() => {
-        localStorage.setItem("user", JSON.stringify(currentUser));
+        setSocket(io("http://localhost:4000"))
 
-    }, [currentUser]);
+    }, []);
+
+    useEffect(() => {
+        currentUser && socket?.emit("newUser", currentUser.id)
+    }, [currentUser, socket])
 
     return (
-        <SocketContext.Provider value={{ currentUser, updateUser }}>
+        <SocketContext.Provider value={{ socket }}>
             {children}
         </SocketContext.Provider>
     )

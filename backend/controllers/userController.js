@@ -148,7 +148,7 @@ export const savePost = async (req, res) => {
         } else {
             await prisma.savedPost.create({
                 data: {
-                    userId:tokenUserId,
+                    userId: tokenUserId,
                     postId,
                 }
             })
@@ -188,15 +188,48 @@ export const ProfilePosts = async (req, res) => {
 
         const savedPosts = saved.map((item) => item.post)
 
-         res.status(200).json({ userPosts, savedPosts });
+        res.status(200).json({ userPosts, savedPosts });
 
-         console.log(savedPosts)
-         console.log(userPosts)
+        console.log(savedPosts)
+        console.log(userPosts)
 
     } catch (error) {
 
         console.log(error)
         res.status(500).json({ message: "Something went wrong" })
     }
+}
+
+
+
+// notification
+
+export const getNotificationNumber = async (req, res) => {
+
+    const tokenUserId = req.userId
+
+    try {
+
+        const number = await prisma.chat.count({
+            where: {
+                userIDs: {
+                    hasSome: [tokenUserId]
+                },
+                NOT: {
+                    seenBy: {
+                        hasSome: [tokenUserId]
+                    }
+                }
+            }
+
+        })
+
+        res.status(200).json(number)
+    } catch (error) {
+
+        console.log(error)
+        res.status(500).json({ message: "Something went wrong" })
+    }
+
 }
 

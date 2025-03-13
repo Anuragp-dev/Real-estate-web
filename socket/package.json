@@ -5,13 +5,15 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "nodemon": "^3.1.9",
-    "socket": "^0.14.61"
+    "socket": "^0.14.61",
+    "socket.io": "^4.8.1"
   }
 }

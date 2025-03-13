@@ -1,18 +1,31 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import './chat.scss'
 import { AuthContext } from '../../context/AuthContext';
 import apiRequest from '../../lib/apiRequest';
 import { format } from "timeago.js"
+import { SocketContext } from '../../context/socketContext';
+import { useNotificationStore } from '../../lib/notificationStore';
 
 const Chat = ({ chats }) => {
     const [chat, setChat] = React.useState(null)
     console.log('Chat: ', chat);
     const { currentUser } = useContext(AuthContext);
+    const { socket } = useContext(SocketContext);
+    const decrease = useNotificationStore((state) => state.decrease);
+
+
+    const messageEndRef = useRef()
+
+    useEffect(() => {
+        messageEndRef.current?.scrollIntoView({ behaviro: "smooth" })
+    }, [chat])
 
     const handleOpenChat = async (id, receiver) => {
         try {
             const res = await apiRequest.get("/chats/" + id)
-            console.log('res: ', res);
+            if (!res?.data?.seenBy?.includes(currentUser.id)) {
+                decrease()
+            }
             setChat({ ...res?.data, receiver })
         } catch (error) {
         }
@@ -26,11 +39,41 @@ const Chat = ({ chats }) => {
             const res = await apiRequest.post("/messages/add-message/" + chat.id, { text })
             setChat((prev) => ({ ...prev, messages: [...prev.messages, res.data] }))
             e.target.reset()
+            socket.emit("sentMessage", {
+                receiverId: chat.receiver.id,
+                data: res.data
+
+            })
         } catch (error) {
-        console.log('error: ', error);
+            console.log('error: ', error);
         }
 
     }
+
+    useEffect(() => {
+
+        const read = async () => {
+            try {
+                await apiRequest.put("/chats/read" + chat.id)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+
+
+        if (chat && socket) {
+            socket.on("getMessage", (data) => {
+                if (chat.id === data.chatId) {
+                    setChat((prev) => ({ ...prev, message: [...prev.message, data] }))
+                    read()
+                }
+            })
+        }
+        return () => {
+            socket.off("getMessage");
+        };
+    }, [socket, chat])
 
 
     return (
@@ -42,7 +85,7 @@ const Chat = ({ chats }) => {
 
                     <div className="message" key={item.id}
                         style={{
-                            backgroundColor: item.seenBy.includes(currentUser.id) ? "white" : "#fecd514e",
+                            backgroundColor: item.seenBy.includes(currentUser.id) || chat?.id === item?.id ? "white" : "#fecd514e",
                         }}
                         onClick={() => handleOpenChat(item.id, item.receiver)}
                     >
@@ -78,9 +121,9 @@ const Chat = ({ chats }) => {
                             <p>{message.text}</p>
                             <span>{format(message.createdAt)}</span>
                         </div>
-                    ))
+                    ))}
 
-                    }
+                    <div ref={messageEndRef}></div>
 
                 </div>
                 <form onSubmit={handleSubmit} className="bottom">

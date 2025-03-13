@@ -190,8 +190,8 @@ export const ProfilePosts = async (req, res) => {
 
         res.status(200).json({ userPosts, savedPosts });
 
-        console.log(savedPosts)
-        console.log(userPosts)
+        // console.log(savedPosts)
+        // console.log(userPosts)
 
     } catch (error) {
 

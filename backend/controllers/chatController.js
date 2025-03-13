@@ -8,6 +8,7 @@ import prisma from "../lib/prisma.js"
 export const getChats = async (req, res) => {
 
     const tokenUserId = req.userId
+    console.log('tokenUserId: ', tokenUserId);
 
     try {
         const chats = await prisma.chat.findMany({
@@ -30,15 +31,16 @@ export const getChats = async (req, res) => {
             }
 
             const receiverId = chat.userIDs.find((id) => id !== tokenUserId);
+            console.log('receiverId: ', receiverId);
 
-            console.log("receiverId:", receiverId); // Check the receiverId
+            // console.log("receiverId:", receiverId); // Check the receiverId
 
             if (!receiverId) {
                 console.log("Receiver ID is undefined for chat:", chat.id);
                 continue;
             }
 
-            console.log('receiverId: ', receiverId)
+            // console.log('receiverId: ', receiverId)
 
             const receiver = await prisma.user.findUnique({
                 where: {
@@ -51,7 +53,7 @@ export const getChats = async (req, res) => {
                 }
             })
             
-            console.log('receiver: ', receiver);
+            // console.log('receiver: ', receiver);
             chat.receiver = receiver
         }
 

@@ -40,7 +40,9 @@ const Chat = ({ chats }) => {
             const res = await apiRequest.post("/messages/add-message/" + chat.id, { text })
             setChat((prev) => ({ ...prev, messages: [...prev.messages, res.data] }))
             e.target.reset()
-            socket.emit("sentMessage", {
+
+            console.log('res: ', res);
+            socket.emit("sendMessage", {
                 receiverId: chat.receiver.id,
                 data: res.data
 
@@ -55,7 +57,7 @@ const Chat = ({ chats }) => {
 
         const read = async () => {
             try {
-                await apiRequest.put("/chats/read" + chat.id)
+                await apiRequest.put("/chats/read/" + chat.id)
             } catch (error) {
                 console.log(error)
             }
@@ -63,10 +65,11 @@ const Chat = ({ chats }) => {
 
 
 
-        if (chat && socket) {
+        if ((chat && socket)) {
             socket.on("getMessage", (data) => {
+                console.log('data: ', data);
                 if (chat.id === data.chatId) {
-                    setChat((prev) => ({ ...prev, message: [...prev.message, data] }))
+                    setChat((prev) => ({ ...prev, messages: [...prev.messages, data] }))
                     read()
                 }
             })

@@ -35,6 +35,7 @@ const Chat = ({ chats }) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const text = formData.get("text");
+        if (!text) return;
         try {
             const res = await apiRequest.post("/messages/add-message/" + chat.id, { text })
             setChat((prev) => ({ ...prev, messages: [...prev.messages, res.data] }))

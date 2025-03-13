@@ -12,6 +12,7 @@ const Chat = ({ chats }) => {
     const { currentUser } = useContext(AuthContext);
     const { socket } = useContext(SocketContext);
     const decrease = useNotificationStore((state) => state.decrease);
+    const formRef = useRef(); // Create a ref for the form
 
 
     const messageEndRef = useRef()
@@ -130,9 +131,17 @@ const Chat = ({ chats }) => {
                     <div ref={messageEndRef}></div>
 
                 </div>
-                <form onSubmit={handleSubmit} className="bottom">
-                    <textarea name='text' ></textarea>
-                    <button>Send</button>
+                <form ref={formRef} onSubmit={handleSubmit} className="bottom">
+                    <textarea
+                        name="text"
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" && !e.shiftKey) {
+                                e.preventDefault(); // Prevents new line in textarea
+                                formRef.current.requestSubmit(); // Properly submits the form
+                            }
+                        }}
+                    ></textarea>
+                    <button type="submit">Send</button>
                 </form>
             </div>
             )}

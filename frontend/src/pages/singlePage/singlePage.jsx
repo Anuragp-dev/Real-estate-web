@@ -3,11 +3,13 @@ import './singlePage.scss'
 import Slider from '../../components/slider/slider'
 import { singlePostData, userData } from '../../lib/dummydata'
 import Map from '../../components/map/map'
-import { useLoaderData, useNavigate } from 'react-router-dom'
+import { Await, useLoaderData, useNavigate } from 'react-router-dom'
 import DOMpurify from 'dompurify'
 import apiRequest from '../../lib/apiRequest';
 import { AuthContext } from '../../context/AuthContext';
 import { useNotificationStore } from '../../lib/notificationStore'
+import { Suspense } from 'react'
+import Chat from '../../components/chat/chat'
 
 const SinglePage = () => {
   const post = useLoaderData();
@@ -183,6 +185,15 @@ const SinglePage = () => {
               {saved ? "Place Saved" : "Save the Place"}
             </button>
           </div>
+
+          <Suspense fallback={<p>Loading...</p>}>
+            <Await
+              resolve={post.chatResponse}
+              errorElement={<p>Error loading chats!</p>}
+            >
+              {(chatResponse) => <Chat chats={chatResponse.data} />}
+            </Await>
+          </Suspense>
         </div>
       </div>
     </div>

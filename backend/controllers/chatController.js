@@ -50,7 +50,7 @@ export const getChats = async (req, res) => {
                     avatar: true
                 }
             })
-            
+
             // console.log('receiver: ', receiver);
             chat.receiver = receiver
         }
@@ -108,21 +108,40 @@ export const getChat = async (req, res) => {
 }
 
 
-
+// add chat with chat id 
 export const addChat = async (req, res) => {
 
     try {
 
         const tokenUserId = req.userId
+        const { receiverId } = req.body;
 
-        const newChat = await prisma.chat.create({
-            data: {
-                userIDs: [tokenUserId, req.body.receiverId]
+
+        if (!receiverId) {
+            return res.status(400).json({ message: "Receiver ID is required" });
+        }
+
+        // Check if a chat between these users already exists
+        const existingChat = await prisma.chat.findFirst({
+            where: {
+                userIDs: {
+                    hasEvery: [tokenUserId, receiverId]
+                }
             }
-        })
+        });
 
-        res.status(200).json(newChat)
+        if (existingChat) {
+            return res.status(200).json(existingChat);
 
+        } else {
+            
+            const newChat = await prisma.chat.create({
+                data: {
+                    userIDs: [tokenUserId, receiverId],
+                }
+            })
+            return res.status(200).json(newChat)
+        }
 
     } catch (error) {
 
@@ -130,6 +149,9 @@ export const addChat = async (req, res) => {
         res.status(500).json({ message: "Something went wrong" })
     }
 }
+
+
+
 
 
 

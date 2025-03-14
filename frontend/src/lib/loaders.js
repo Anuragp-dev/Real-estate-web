@@ -3,7 +3,12 @@ import { defer } from "react-router-dom";
 
 export const singlePageLoader = async ({ request, params }) => {
     const response = await apiRequest("/posts/getPost/" + params.id);
-    return response.data
+    const chatPromise = apiRequest("/chats");
+    return defer({
+      postResponse: response.data,
+      chatResponse: chatPromise,
+    });
+
 }
 
 export const listPageLoader = async ({ request, params }) => {

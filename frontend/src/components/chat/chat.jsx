@@ -8,7 +8,6 @@ import { useNotificationStore } from '../../lib/notificationStore';
 
 const Chat = ({ chats }) => {
     const [chat, setChat] = React.useState(null)
-    console.log('Chat: ', chat);
     const { currentUser } = useContext(AuthContext);
     const { socket } = useContext(SocketContext);
     const decrease = useNotificationStore((state) => state.decrease);

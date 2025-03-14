@@ -38,10 +38,10 @@ io.on("connection", (socket) => {
 
 
     socket.on("sendMessage", ({ receiverId, data }) => {
-        console.log("data", data);
-        console.log("receiverId", receiverId);
+        // console.log("data", data);
+        // console.log("receiverId", receiverId);
         const receiver = getUser(receiverId)
-        console.log("receiver", receiver);
+        // console.log("receiver", receiver);
 
         io.to(receiver.socketId).emit("getMessage", data)
     })

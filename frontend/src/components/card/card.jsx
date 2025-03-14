@@ -1,13 +1,52 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import './card.scss'
+import apiRequest from '../../lib/apiRequest';
+import { AuthContext } from '../../context/AuthContext';
 
 
 const Card = ({ item }) => {
+  // const post = useLoaderData();
+  const { currentUser } = useContext(AuthContext);
+  const [saved, setSaved] = useState(item.saved);
+
+  const navigate = useNavigate();
 
   if (!item || !item.images || item.images.length === 0) {
-    return <div className="card">No data available</div>;
+    return <div className="card"></div>;
   }
+
+
+  const handleOpenChat = async (id, receiver) => {
+    try {
+      const res = await apiRequest.get("/chats/" + id)
+      if (!res?.data?.seenBy?.includes(currentUser.id)) {
+        decrease()
+      }
+      setChat({ ...res?.data, receiver })
+    } catch (error) {
+    }
+  }
+
+
+  const handleSave = async () => {
+
+    setSaved((prev) => !prev);
+    if (!currentUser) {
+
+      navigate("/login");
+    }
+
+    try {
+
+      await apiRequest.post("/users/save-post", { postId: item.id })
+
+    } catch (error) {
+      console.log(error)
+      setSaved((prev) => !prev);
+    }
+  }
+
   return (
     <div className='card'>
       <Link to={`/${item.id}`} className='imageContainer'>
@@ -34,7 +73,7 @@ const Card = ({ item }) => {
             </div>
           </div>
           <div className="icons">
-            <div className="icon">
+            <div className="icon " onClick={handleSave} style={{ backgroundColor: saved ? "#fece51" : "white" }}>
               <img src="/save.png" alt="" />
             </div>
             <div className="icon">

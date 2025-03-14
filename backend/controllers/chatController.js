@@ -8,7 +8,7 @@ import prisma from "../lib/prisma.js"
 export const getChats = async (req, res) => {
 
     const tokenUserId = req.userId
-    console.log('tokenUserId: ', tokenUserId);
+    // console.log('tokenUserId: ', tokenUserId);
 
     try {
         const chats = await prisma.chat.findMany({
@@ -22,16 +22,14 @@ export const getChats = async (req, res) => {
         for (const chat of chats) {
 
 
-            console.log("Chat Data:", chat);
+            // console.log("Chat Data:", chat);
 
             // Check if userIDs exist
             if (!chat.userIDs || chat.userIDs.length === 0) {
-                console.log("No userIDs found in chat:", chat.id);
                 continue;
             }
 
             const receiverId = chat.userIDs.find((id) => id !== tokenUserId);
-            console.log('receiverId: ', receiverId);
 
             // console.log("receiverId:", receiverId); // Check the receiverId
 

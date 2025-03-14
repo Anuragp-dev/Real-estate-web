@@ -121,7 +121,6 @@ export const deleteUser = async (req, res) => {
 
 
 //save later
-
 export const savePost = async (req, res) => {
 
     const postId = req.body.postId
@@ -129,7 +128,7 @@ export const savePost = async (req, res) => {
 
     try {
 
-        const savedPost = await prisma.savedPost.findUnique({
+        const savedPost = await prisma.savedPost.findFirst({
             where: {
                 userId_postId: {
                     userId: tokenUserId,
@@ -145,6 +144,9 @@ export const savePost = async (req, res) => {
                     id: savedPost.id,
                 }
             })
+
+            res.status(200).json({ message: "Post unsaved successfully",saved:false })
+
         } else {
             await prisma.savedPost.create({
                 data: {

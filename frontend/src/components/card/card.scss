@@ -3,6 +3,7 @@
 .card {
     display: flex;
     gap: 20px;
+    
 
     .imageContainer {
         flex: 2;
@@ -75,7 +76,7 @@
 
 
 
-                .feature{
+                .feature {
                     display: flex;
                     align-items: center;
                     gap: 5px;
@@ -85,12 +86,12 @@
                 }
             }
 
-            .icons{
+            .icons {
                 display: flex;
                 gap: 20px;
 
-                .icon{
-                    border:1px solid #999;
+                .icon {
+                    border: 1px solid #999;
                     padding: 2px 5px;
                     border-radius: 5px;
                     cursor: pointer;
@@ -98,8 +99,8 @@
                     align-items: center;
                     justify-content: center;
 
-                    &:hover{
-                        background-color:lightgrey;
+                    &:hover {
+                        background-color: lightgrey;
                     }
                 }
             }

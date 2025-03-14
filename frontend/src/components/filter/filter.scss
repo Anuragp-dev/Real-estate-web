@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    flex-wrap: wrap;
 
     h1 {
         font-weight: 300;
@@ -9,7 +10,7 @@
     }
 
     .item {
-        display: flex;
+        display: flex;  
         flex-direction: column;
         gap: 2px;
 
@@ -17,7 +18,8 @@
             font-size: 10px;
         }
 
-        input,select {
+        input,
+        select {
             width: 100px;
             padding: 10px;
             border-radius: 5px;
@@ -26,19 +28,19 @@
         }
     }
 
-    .top{
-        input{
+    .top {
+        input {
             width: 100%;
         }
     }
 
-    .bottom{
+    .bottom {
         display: flex;
         justify-content: space-between;
         gap: 20px;
 
 
-        button{
+        button {
             width: 100px;
             padding: 10px;
             border: none;
@@ -46,13 +48,13 @@
             background-color: #fece51;
 
 
-            img{
+            img {
                 width: 24px;
                 height: 24px;
             }
         }
 
-       
+
     }
 
 }

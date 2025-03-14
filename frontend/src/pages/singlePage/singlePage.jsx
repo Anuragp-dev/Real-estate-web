@@ -10,18 +10,22 @@ import { AuthContext } from '../../context/AuthContext';
 
 const SinglePage = () => {
   const post = useLoaderData();
+  // console.log('post: ', post);
   const { currentUser } = useContext(AuthContext);
-  const [saved, setSaved] = useState(post.saved);
+  const [saved, setSaved] = useState(post?.isSaved);
+  // console.log('saved: ', saved);
+
 
   const navigate = useNavigate();
 
   const handleSave = async () => {
 
-    setSaved((prev) => !prev);
     if (!currentUser) {
 
       navigate("/login");
     }
+
+    setSaved((prev) => !prev);
 
     try {
 
@@ -30,6 +34,18 @@ const SinglePage = () => {
     } catch (error) {
       console.log(error)
       setSaved((prev) => !prev);
+    }
+  }
+
+
+  const handleOpenChat = async (id, receiver) => {
+    try {
+      const res = await apiRequest.get("/chats/" + id)
+      if (!res?.data?.seenBy?.includes(currentUser.id)) {
+        decrease()
+      }
+      setChat({ ...res?.data, receiver })
+    } catch (error) {
     }
   }
 
@@ -159,7 +175,7 @@ const SinglePage = () => {
             </button>
             <button onClick={handleSave} style={{ backgroundColor: saved ? "#fece51" : "white" }}>
               <img src="/save.png" alt="" />
-             {saved ? "Place Saved" : "Save the Place"}
+              {saved ? "Place Saved" : "Save the Place"}
             </button>
           </div>
         </div>

@@ -6,9 +6,11 @@ import { AuthContext } from '../../context/AuthContext';
 
 
 const Card = ({ item }) => {
+console.log('item: ', item);
   // const post = useLoaderData();
   const { currentUser } = useContext(AuthContext);
-  const [saved, setSaved] = useState(item.saved);
+  const [saved, setSaved] = useState(item.isSaved);
+  console.log('savedqq: ', saved);
 
   const navigate = useNavigate();
 

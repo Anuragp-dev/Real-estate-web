@@ -3,45 +3,126 @@ import jwt from "jsonwebtoken"
 
 
 
-export const getPosts = async (req, res) => {
+// export const getPosts = async (req, res) => {
 
-    try {
-        const query = req.query
-        const posts = await prisma.post.findMany(
-            {
-                where: {
-                    city: query.city || undefined,
-                    type: query.type || undefined,
-                    property: query.property || undefined,
-                    bedroom: parseInt(query.bedroom) || undefined,
-                    price: {
-                        gte: parseInt(query.minPrice) || undefined,
-                        lte: parseInt(query.maxPrice) || undefined,
-                    },
-                },
-            }
-        )
+//     try {
+//         const query = req.query
+//         const posts = await prisma.post.findMany(
+//             {
+//                 where: {
+//                     city: query.city || "",
+//                     type: query.type || undefined,
+//                     property: query.property || undefined,
+//                     bedroom: parseInt(query.bedroom) || undefined,
+//                     price: {
+//                         gte: parseInt(query.minPrice) || undefined,
+//                         lte: parseInt(query.maxPrice) || undefined,
+//                     },
+//                 },
+//             }
+//         )
 
-        res.status(200).json(posts)
+//         const token = req.cookies?.token;
+//         let isSaved = false;
 
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({ message: "Something went wrong" })
-    }
-}
+//         if (token) {
+//             try {
+//                 const payload = jwt.verify(token, process.env.JWT_SECRET);
+//                 const saved = await prisma.savedPost.findUnique({
+//                     where: {
+//                         userId_postId: {
+//                             postId: id,
+//                             userId: payload.id,
+//                         },
+//                     },
+//                 });
+//                 isSaved = saved ? true : false;
+//             } catch (err) {
+//                 console.error("JWT verification failed:", err);
+//             }
+//         }
+
+
+
+//         res.status(200).json(posts)
+
+//     } catch (error) {
+//         console.log(error)
+//         res.status(500).json({ message: "Something went wrong" })
+//     }
+// }
 
 // get post by id 
 
-export const getPost = async (req, res) => {
-
+export const getPosts = async (req, res) => {
     try {
+        const query = req.query;
+        const posts = await prisma.post.findMany({
+            where: {
+                city: query.city || "",
+                type: query.type || undefined,
+                property: query.property || undefined,
+                bedroom: parseInt(query.bedroom) || undefined,
+                price: {
+                    gte: parseInt(query.minPrice) || undefined,
+                    lte: parseInt(query.maxPrice) || undefined,
+                },
+            },
+        });
 
-        const id = req.params.id
+        const token = req.cookies?.token;
+        let userId = null;
+
+        if (token) {
+            try {
+                const payload = jwt.verify(token, process.env.JWT_SECRET);
+                userId = payload.id;
+            } catch (err) {
+                console.error("JWT verification failed:", err);
+            }
+        }
+
+        // If the user is logged in, check if each post is saved
+        if (userId) {
+            const postsWithSaveStatus = await Promise.all(
+                posts.map(async (post) => {
+                    const saved = await prisma.savedPost.findUnique({
+                        where: {
+                            userId_postId: {
+                                postId: post.id,
+                                userId: userId,
+                            },
+                        },
+                    });
+
+                    return {
+                        ...post,
+                        isSaved: saved ? true : false,
+                    };
+                })
+            );
+
+            return res.status(200).json(postsWithSaveStatus);
+        }
+
+        // If user is not logged in, return posts with isSaved: false
+        res.status(200).json(posts.map(post => ({ ...post, isSaved: false })));
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Something went wrong" });
+    }
+};
+
+
+// get post by id
+
+export const getPost = async (req, res) => {
+    try {
+        const id = req.params.id;
 
         const post = await prisma.post.findUnique({
-            where: {
-                id
-            },
+            where: { id },
             include: {
                 PostDetail: true,
                 user: {
@@ -51,32 +132,39 @@ export const getPost = async (req, res) => {
                     }
                 }
             }
-        })
+        });
+
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
 
         const token = req.cookies?.token;
+        let isSaved = false;
 
         if (token) {
-          jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, payload) => {
-            if (!err) {
-              const saved = await prisma.savedPost.findUnique({
-                where: {
-                  userId_postId: {
-                    postId: id,
-                    userId: payload.id,
-                  },
-                },
-              });
-              res.status(200).json({ ...post, isSaved: saved ? true : false });
+            try {
+                const payload = jwt.verify(token, process.env.JWT_SECRET);
+                const saved = await prisma.savedPost.findUnique({
+                    where: {
+                        userId_postId: {
+                            postId: id,
+                            userId: payload.id,
+                        },
+                    },
+                });
+                isSaved = saved ? true : false;
+            } catch (err) {
+                console.error("JWT verification failed:", err);
             }
-          });
         }
-        res.status(200).json({ ...post, isSaved: false });
+
+        return res.status(200).json({ ...post, isSaved });
 
     } catch (error) {
-        console.log(error)
-        res.status(500).json({ message: "Something went wrong" })
+        console.error(error);
+        return res.status(500).json({ message: "Something went wrong" });
     }
-}
+};
 
 
 export const addPost = async (req, res) => {

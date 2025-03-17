@@ -52,7 +52,7 @@ const SinglePage = () => {
 
 
       const getChat = await apiRequest.get("/chats/" + res?.data?.id)
-      console.log('getChat: ', getChat);
+      // console.log('getChat: ', getChat);
       setIsChat({ ...getChat?.data })
       if (!getChat?.data?.seenBy?.includes(currentUser.id)) {
         decrease()
@@ -199,7 +199,7 @@ const SinglePage = () => {
           </div>
 {
   isChat &&
-          <Chat chatId={isChat?.id} receiverId={post.postResponse.userId}  isMessage={false} />
+          <Chat chats={isChat} chatId={isChat?.id} receiverId={post.postResponse.userId}  isMessage={false} />
 }
           {/* <Suspense fallback={<p>Loading...</p>}>
             <Await

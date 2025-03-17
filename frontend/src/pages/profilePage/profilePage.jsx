@@ -85,7 +85,7 @@ const ProfilePage = () => {
                             resolve={data.chatResponse}
                             errorElement={<p>Error loading chats!</p>}
                             >
-                            {(chatResponse) => <Chat chats={chatResponse.data} />}
+                            {(chatResponse) => <Chat chats={chatResponse.data} isMessage={true} />}
                         </Await>
                     </Suspense>
                 </div>

@@ -191,7 +191,7 @@ const SinglePage = () => {
               resolve={post.chatResponse}
               errorElement={<p>Error loading chats!</p>}
             >
-              {(chatResponse) => <Chat chats={chatResponse.data} />}
+              {(chatResponse) => <Chat chats={chatResponse.data} isMessage={false} />}
             </Await>
           </Suspense>
         </div>

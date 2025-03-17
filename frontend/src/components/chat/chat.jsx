@@ -6,7 +6,7 @@ import { format } from "timeago.js"
 import { SocketContext } from '../../context/socketContext';
 import { useNotificationStore } from '../../lib/notificationStore';
 
-const Chat = ({ chats }) => {
+const Chat = ({ chats, isMessage }) => {
     const [chat, setChat] = React.useState(null)
     const { currentUser } = useContext(AuthContext);
     const { socket } = useContext(SocketContext);
@@ -82,26 +82,28 @@ const Chat = ({ chats }) => {
 
     return (
         <div className='chat'>
-            <div className="messages">
-                <h1>Message</h1>
+            {isMessage 
+                && ( <div className="messages">
+                    <h1>Message</h1>
 
-                {chats?.map((item) => (
+                    {chats?.map((item) => (
 
-                    <div className="message" key={item.id}
-                        style={{
-                            backgroundColor: item.seenBy.includes(currentUser.id) || chat?.id === item?.id ? "white" : "#fecd514e",
-                        }}
-                        onClick={() => handleOpenChat(item.id, item.receiver)}
-                    >
-                        <img src={item?.receiver?.avatar || "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"} alt="" />
-                        <span>{item?.receiver?.username}</span>
-                        <p>
-                            {item.lastMessage}
-                        </p>
-                    </div>
+                        <div className="message" key={item.id}
+                            style={{
+                                backgroundColor: item.seenBy.includes(currentUser.id) || chat?.id === item?.id ? "white" : "#fecd514e",
+                            }}
+                            onClick={() => handleOpenChat(item.id, item.receiver)}
+                        >
+                            <img src={item?.receiver?.avatar || "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"} alt="" />
+                            <span>{item?.receiver?.username}</span>
+                            <p>
+                                {item.lastMessage}
+                            </p>
+                        </div>
 
-                ))}
-            </div>
+                    ))}
+                </div>
+            )}
             {chat && (<div className='chatBox'>
                 <div className="top">
                     <div className="user">

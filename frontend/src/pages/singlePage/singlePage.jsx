@@ -18,6 +18,7 @@ const SinglePage = () => {
   const { currentUser } = useContext(AuthContext);
   const [saved, setSaved] = useState(post?.isSaved);
   const decrease = useNotificationStore((state) => state.decrease);
+  const [isChat, setIsChat] = useState(null)
   // console.log('saved: ', saved);
 
 
@@ -47,9 +48,20 @@ const SinglePage = () => {
 
     try {
       const res = await apiRequest.post("/chats/add-chat", { receiverId: receiverId })
-      if (!res?.data?.seenBy?.includes(currentUser.id)) {
+      // console.log('res: ', res);
+
+
+      const getChat = await apiRequest.get("/chats/" + res?.data?.id)
+      console.log('getChat: ', getChat);
+      setIsChat({ ...getChat?.data })
+      if (!getChat?.data?.seenBy?.includes(currentUser.id)) {
         decrease()
       }
+
+
+      // if (!res?.data?.seenBy?.includes(currentUser.id)) {
+      //   decrease()
+      // }
       // setChat({ ...res?.data, receiver })
     } catch (error) {
       console.log(error)
@@ -185,15 +197,18 @@ const SinglePage = () => {
               {saved ? "Place Saved" : "Save the Place"}
             </button>
           </div>
-
-          <Suspense fallback={<p>Loading...</p>}>
+{
+  isChat &&
+          <Chat chatId={isChat?.id} receiverId={post.postResponse.userId}  isMessage={false} />
+}
+          {/* <Suspense fallback={<p>Loading...</p>}>
             <Await
-              resolve={post.chatResponse}
+              resolve={isChat}
               errorElement={<p>Error loading chats!</p>}
             >
-              {(chatResponse) => <Chat chats={chatResponse.data} isMessage={false} />}
+              {(chatResponse) => <Chat chats={chatResponse} chatId={chatResponse?.id} receiverId={post.postResponse.userId}  isMessage={false} />}
             </Await>
-          </Suspense>
+          </Suspense> */}
         </div>
       </div>
     </div>

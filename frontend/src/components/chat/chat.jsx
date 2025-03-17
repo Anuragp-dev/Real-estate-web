@@ -6,8 +6,11 @@ import { format } from "timeago.js"
 import { SocketContext } from '../../context/socketContext';
 import { useNotificationStore } from '../../lib/notificationStore';
 
-const Chat = ({ chats, isMessage }) => {
+const Chat = ({ chats, isMessage, chatId, receiverId }) => {
+    console.log('chatId: ', chatId);
+    console.log('receiverId: ', receiverId);
     const [chat, setChat] = React.useState(null)
+    console.log('chat: ', chat);
     const { currentUser } = useContext(AuthContext);
     const { socket } = useContext(SocketContext);
     const decrease = useNotificationStore((state) => state.decrease);
@@ -17,12 +20,20 @@ const Chat = ({ chats, isMessage }) => {
     const messageEndRef = useRef()
 
     useEffect(() => {
-        messageEndRef.current?.scrollIntoView({ behaviro: "smooth" })
+        messageEndRef.current?.scrollIntoView({ behavior: "smooth" })
     }, [chat])
+
+    useEffect(() => {
+        if (!isMessage) {
+
+            handleOpenChat(chatId, receiverId)
+        }
+    }, [chats,])
 
     const handleOpenChat = async (id, receiver) => {
         try {
             const res = await apiRequest.get("/chats/" + id)
+            console.log('res: ', res);
             if (!res?.data?.seenBy?.includes(currentUser.id)) {
                 decrease()
             }
@@ -82,8 +93,8 @@ const Chat = ({ chats, isMessage }) => {
 
     return (
         <div className='chat'>
-            {isMessage 
-                && ( <div className="messages">
+            {isMessage
+                && (<div className="messages">
                     <h1>Message</h1>
 
                     {chats?.map((item) => (
@@ -103,7 +114,7 @@ const Chat = ({ chats, isMessage }) => {
 
                     ))}
                 </div>
-            )}
+                )}
             {chat && (<div className='chatBox'>
                 <div className="top">
                     <div className="user">

@@ -13,7 +13,7 @@ Real Estate Finder is a modern web application designed to simplify property sea
 
 ---
 
-## 📦 Installation
+## 📦 Installation 
 
 ### **1️⃣ Clone the repository**
 ```sh

@@ -3,7 +3,7 @@
 Real Estate Finder is a modern web application designed to simplify property searches. Users can browse listings, filter by location, price, and type, and view detailed property information. The platform also features **real-time messaging** for instant communication with property owners or agents.
 
 --- 
-
+ 
 ## 🚀 Tech Stack
  
 - **Frontend:** React (Vite)

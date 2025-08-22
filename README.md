@@ -11,7 +11,7 @@ Real Estate Finder is a modern web application designed to simplify property sea
 - **Database:** MongoDB (with Prisma ORM)
 - **Real-Time Communication:** Socket.io
 
----
+--- 
 
 ## 📦 Installation 
 

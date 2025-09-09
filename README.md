@@ -8,7 +8,7 @@ Real Estate Finder is a modern web application designed to simplify property sea
  
 - **Frontend:** React (Vite) 
 - **Backend:** Node.js, Express
-- **Database:** MongoDB (with Prisma ORM)
+- **Database:** MongoDB (with Prisma ORM) 
 - **Real-Time Communication:** Socket.io 
 
 --- 
